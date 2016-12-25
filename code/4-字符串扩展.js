@@ -169,6 +169,7 @@ console.log`123`;//通过这种方式传入的其实是一个数组，而不仅�
 console.log`加 法:${1}+${5}=${1+5}`;
 //['加法:','+','=','']  1  5  6
 //当做参数时，会把只是字符串的部分拼接成数组，字符串在碰到 ${} 表达式的时候分割开变成一个子元素
+//且该数组还有一个raw属性，存储的是当前数组的，不过会把之前的字符进行转义。
 //${} 表达式中返回的值会当做另一个参数传入函数。
 //使用下面方法能把传入的参数重新拼接成之前的样子
 function reconstruct(strarr,...values) {
@@ -181,3 +182,11 @@ function reconstruct(strarr,...values) {
 }
 
 console.log( reconstruct`abc is ${3},but i like${5} xyz` );
+
+//String.raw()  该方法专门用来将模板字符串进行转义
+
+console.log( String.raw`Hi \n ${2+3}` );  // Hi \\n 5   不仅会计算出表达式的结果，还能将\进行转义
+//也能做一个方法使用：
+console.log( String.raw({
+	raw:'text'
+},0,1,2) );  //t0e1x2t
