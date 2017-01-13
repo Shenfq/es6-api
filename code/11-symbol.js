@@ -54,3 +54,37 @@ console.log(s1===s2); // true
 //Symbol.keyFor(symbol)  该方法用来返回一个Symbol的描述
 console.log( Symbol.keyFor(s1) );  //TheOne
 
+
+//内置的Symbol值
+
+//1、Symbol.hasInstace   调用instanceof运算符的时候就会调用此方法
+
+var obj = function(name) {
+	this.name = name;
+}
+obj.prototype = {
+	[Symbol.hasInstance](foo) {
+		console.log(foo);
+		return foo instanceof Array;
+	}
+}
+var objstance = new obj();
+console.log(objstance);
+console.log( [1,2,3] instanceof objstance );
+
+//2、Symbol.isConcatSpreadable  设置此属性（布尔值），表示该对象在concat时，是否能展开
+
+var arr = [5,6]
+arr[Symbol.isConcatSpreadable] = false;
+console.log( [1,2].concat(arr,0) );  //[1, 2, [5, 6], 0]
+
+
+//3、Symbol.match
+/*
+String.prototype.match(regexp)
+// 等同于
+regexp[Symbol.match](this)
+*/
+
+
+
